@@ -4,12 +4,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import ru.zolotorevskii.task.dto.SegmentDto;
 import ru.zolotorevskii.task.model.Parser;
 import ru.zolotorevskii.task.model.IntervalParse;
 import ru.zolotorevskii.task.service.DigitService;
 import ru.zolotorevskii.task.service.LetterService;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -41,7 +43,13 @@ public class Controller {
             } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
             }
-            var segments = Parser.parseArrayToListDigit(array);
+            List<SegmentDto> segments = null;
+            try {
+                segments = Parser.parseArrayToListDigit(array);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return;
+            }
             IntervalParse.checkIntersections(segments);
 
             digitService.putAll(segments);
@@ -52,7 +60,13 @@ public class Controller {
             } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
             }
-            var segments = Parser.parseArrayToListLetter(array);
+            List<SegmentDto> segments = null;
+            try {
+                segments = Parser.parseArrayToListLetter(array);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return;
+            }
             IntervalParse.checkIntersections(segments);
 
             letterService.putAll(segments);

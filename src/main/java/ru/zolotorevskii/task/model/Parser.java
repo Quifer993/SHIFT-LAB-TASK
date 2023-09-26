@@ -6,17 +6,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Parser {
-    public static List<SegmentDto> parseArrayToListDigit(int[][] arr) {
+    public static List<SegmentDto> parseArrayToListDigit(int[][] arr) throws Exception {
         List<SegmentDto> segments = new ArrayList<>();
         for (int[] array : arr) {
+            if(array[0] > array[1]) throw new Exception();
             segments.add(new SegmentDto<>(array[0], array[1]));
         }
         return segments;
     }
 
-    public static List<SegmentDto> parseArrayToListLetter(char[][] arr) {
+    public static List<SegmentDto> parseArrayToListLetter(char[][] arr) throws Exception{
         List<SegmentDto> segments = new ArrayList<>();
         for (char[] array : arr) {
+            if(array[0] > array[1]) throw new Exception();
             segments.add(new SegmentDto<>(Character.toString(array[0]), Character.toString(array[1])));
         }
         return segments;
